@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public interface TransfersRepository extends JpaRepository<TransferEntity, Long> {
 
-    @Query(value = "SELECT transfer FROM TransferEntity transfer WHERE transfer.account_from = :account_number OR transfer.account_to = :account_number ORDER BY transfer.id DESC")
+    @Query(value = "SELECT transfer FROM TransferEntity transfer WHERE transfer.account_from.id = :account_number OR transfer.account_to.id = :account_number ORDER BY transfer.id DESC")
     Optional<List<TransferEntity>> findByAccount(Long account_number, Pageable pageable);
 
 }

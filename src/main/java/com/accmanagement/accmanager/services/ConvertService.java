@@ -11,17 +11,15 @@ import static com.accmanagement.accmanager.configuration.LinksConfig.CONVERT_API
 
 @Service
 public class ConvertService {
-
     public Mono<JsonNode> convert(String ccy_from, String ccy_to, Double amount) {
         WebClient webClient = WebClient.builder().build();
-
         return webClient
                 .get()
                 .uri(String.format(CONVERT_API_URI, ccy_to, ccy_from, amount))
                 .header("apikey", "dtb9YXJOCHvpjcdkZxsBn4V6Zecnohvz")
                 .retrieve()
                 .onStatus(HttpStatusCode::is5xxServerError, response -> Mono.error(new ServiceUnavailableException()))
+                .onStatus(HttpStatusCode::is4xxClientError, response -> Mono.error(new Exception()))
                 .bodyToMono(JsonNode.class);
     }
-
 }

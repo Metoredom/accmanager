@@ -1,6 +1,0 @@
-databaseChangeLog:
-  - changeSet:
-      id: create-client
-      author: Matvei Barbashov
-      changes:
-        - createTable:
