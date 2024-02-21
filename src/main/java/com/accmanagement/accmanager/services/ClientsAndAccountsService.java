@@ -14,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -35,6 +36,6 @@ public class ClientsAndAccountsService {
 
     public List<TransferEntity> getAccountHistory(Long account_id, Pageable pageable) throws AccountNotFoundException {
         if (!accountsRepository.existsById(account_id)) throw new AccountNotFoundException();
-        return transfersRepository.findByAccount(account_id, pageable).orElse(new ArrayList<>());
+        return transfersRepository.findByAccount(account_id, pageable).orElseGet(Collections::emptyList);
     }
 }
